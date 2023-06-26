@@ -18,10 +18,17 @@ chrome.storage.local.get(["key"], function (result) {
 
     renderPasswordList(existingPasswords, passwordList, key);
 
+    const editButtons = document.querySelectorAll(".list-tile");
+    editButtons.forEach((button, index) => {
+      button.addEventListener("click", () => {
+        detailsPage(existingPasswords[index]);
+      });
+    });
+
     const trashIcons = document.querySelectorAll(".fas.fa-trash-alt");
-    trashIcons.forEach((icon) => {
+    trashIcons.forEach((icon, index) => {
       icon.addEventListener("click", (event) => {
-        const index = event.target.getAttribute("data-index");
+        event.stopPropagation(); // Prevent event bubbling to list item
         removePassword(index, existingPasswords, passwordList, key);
       });
     });
